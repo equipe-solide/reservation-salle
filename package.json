@@ -4,7 +4,11 @@
   "description": "PROJET SOA - M2GB",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-reservation-service": "node ./services/reservation-service/index.js",
+    "start-room-service": "node ./services/room-service/index.js",
+    "start-user-service": "node ./services/user-service/index.js",
+    "start": "concurrently 'npm run start-reservation-service' 'npm run start-room-service' 'npm run start-user-service'"
   },
   "keywords": [],
   "author": "",
