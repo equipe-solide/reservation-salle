@@ -1,0 +1,4 @@
+node_modules 
+services/reservation-service/node_modules
+services/room-service/node_modules
+services/user-service/node_modules
