@@ -8,12 +8,16 @@
     "start-reservation-service": "node ./services/reservation-service/index.js",
     "start-room-service": "node ./services/room-service/index.js",
     "start-user-service": "node ./services/user-service/index.js",
-    "start": "concurrently 'npm run start-reservation-service' 'npm run start-room-service' 'npm run start-user-service'"
+    "start-main-service": "node ./index.js",
+    "start": "concurrently 'npm run start-reservation-service' 'npm run start-room-service' 'npm run start-user-service' 'npm run start-main-service'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "module-alias": "^2.2.3"
   }
 }
