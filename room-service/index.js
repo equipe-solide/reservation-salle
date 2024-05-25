@@ -1,8 +1,10 @@
+require('module-alias/register');
 const path = require('path');
-const grpc = require('@grpc/grpc-js');
+const { ROOM_SERVICE_URI } = require('@root/config'); 
+const grpc = require('@grpc/grpc-js'); 
 const protoLoader = require('@grpc/proto-loader');
-const packageDefinition = protoLoader.loadSync(path.join(__dirname, '../../protos/room.proto'));
-// const degreeProto = grpc.loadPackageDefinition(packageDefinition);
+const packageDefinition = protoLoader.loadSync(path.join(__dirname, '../protos/room.proto'));
+const degreeProto = grpc.loadPackageDefinition(packageDefinition);
 
 // const DEGREE = [
 //     {
@@ -29,6 +31,6 @@ function findDegree(call, callback) {
 const server = new grpc.Server();
 // server.addService(degreeProto.Degrees.service, { find: findDegree });
 
-server.bindAsync('0.0.0.0:50052', grpc.ServerCredentials.createInsecure(), () => {
+server.bindAsync(ROOM_SERVICE_URI, grpc.ServerCredentials.createInsecure(), () => {
     server.start();
 });

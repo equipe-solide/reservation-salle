@@ -1,10 +1,9 @@
+require('module-alias/register');
 const { PrismaClient } = require('@prisma/client');
 const { users, issues } = new PrismaClient(); 
- 
+const { unset } = require('@root/main/helpers'); 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
-
-const { unset } = require('../../../helpers');
 
 // generate random token 
 const generateRandomToken = () => {

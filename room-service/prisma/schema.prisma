@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model equipements {
+  id             Int     @id @default(autoincrement())
+  nom_equipement String  @db.VarChar(40)
+  description    String? @db.VarChar(75)
+  dispo          Boolean @default(true)
+}
+
+model rooms {
+  id            Int      @id @default(autoincrement())
+  equipement_id Int?
+  nom_salle     String   @db.VarChar(40)
+  lieu          String   @db.VarChar(40)
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+}

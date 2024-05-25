@@ -1,10 +1,12 @@
 {
-  "name": "reservation-service",
+  "name": "room-service",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "schema:generate": "npx prisma db pull && npx prisma generate",
+    "migrate": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,10 @@
     "@grpc/proto-loader": "^0.7.13",
     "@prisma/client": "^5.14.0",
     "express": "^4.19.2",
+    "module-alias": "^2.2.3",
     "prisma": "^5.14.0"
+  }, 
+  "_moduleAliases": {
+    "@root": "../"
   }
 }
