@@ -1,5 +1,5 @@
 {
-  "name": "Reservation Salle en Ligne",
+  "name": "Reservation_Salle",
   "version": "1.0.0",
   "description": "PROJET SOA - M2GB",
   "main": "index.js",
@@ -9,7 +9,12 @@
     "start-room-service": "node ./services/room-service/index.js",
     "start-user-service": "node ./services/user-service/index.js",
     "start-main-service": "node ./index.js",
-    "start": "concurrently 'npm run start-reservation-service' 'npm run start-room-service' 'npm run start-user-service' 'npm run start-main-service'"
+    "start-reservation-service-dev": "nodemon ./services/reservation-service/index.js",
+    "start-room-service-dev": "nodemon ./services/room-service/index.js",
+    "start-user-service-dev": "nodemon ./services/user-service/index.js",
+    "start-main-service-dev": "nodemon ./index.js",
+    "start": "concurrently 'npm run start-reservation-service' 'npm run start-room-service' 'npm run start-user-service' 'npm run start-main-service'",
+    "start-dev": "concurrently 'npm run start-reservation-service-dev' 'npm run start-room-service-dev' 'npm run start-user-service-dev' 'npm run start-main-service-dev'"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +23,11 @@
     "concurrently": "^8.2.2"
   },
   "dependencies": {
-    "module-alias": "^2.2.3"
+    "@grpc/grpc-js": "^1.10.8",
+    "@grpc/proto-loader": "^0.7.13",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "module-alias": "^2.2.3",
+    "nodemon": "^3.1.0"
   }
 }
