@@ -1,6 +1,6 @@
 require('module-alias/register');
 const router  = require('express').Router(); 
-const UserController = require('@root/user-service/controllers/UserController');
+const UserController = require('../controllers/UserController');
 
 router.get('/', UserController.index);
 router.get('/:id', UserController.show);

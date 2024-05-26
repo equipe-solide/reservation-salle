@@ -33,4 +33,5 @@ const server = new grpc.Server();
 
 server.bindAsync(RESERVATION_SERVICE_URI, grpc.ServerCredentials.createInsecure(), () => {
     server.start();
+    console.log(`Reservation service running @${RESERVATION_SERVICE_URI}`)
 });
