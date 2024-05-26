@@ -1,5 +1,21 @@
 syntax = "proto3";
 
-service Room {
-    
+service RoomService {
+    rpc find(findRequest) returns (Room);
+    rpc findAll(Empty) returns (stream Room);
 }
+
+message Empty {}
+message findRequest {
+    int32 id = 1;
+}
+
+message Room {
+    int32 id = 1;
+    int32 equipement_id = 2;
+    string nom_salle = 3;
+    string lieu = 4;
+    string created_at = 5;
+}   
+
+

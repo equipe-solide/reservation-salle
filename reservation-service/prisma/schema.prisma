@@ -18,6 +18,8 @@ model notifications {
 
 model reservations {
   id               Int       @id @default(autoincrement())
+  room_id          Int
+  user_id          Int
   date_heure_debut DateTime  @db.Date
   date_heure_fin   DateTime? @db.Date
   statut           String    @default("en attente") @db.VarChar(20)

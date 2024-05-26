@@ -1,17 +1,35 @@
 require('module-alias/register');
 const { PrismaClient } = require('@prisma/client');
 const { reservations } = new PrismaClient(); 
+const { USER_SERVICE_URI } = require('@root/config');
+const { promisify } = require('util');
+const { userGrpcClient, roomGrpcClient } = require('@root/main/grpc-client');
+
+// Promisify the gRPC client method
+const findUser = promisify(userGrpcClient.find).bind(userGrpcClient);
+const findRoom = promisify(roomGrpcClient.find).bind(roomGrpcClient);
 
 module.exports = {
-    index: async(req, res, next) => {
+    index: async (req, res, next) => {
         try {
-            const reservations_ = await reservations.findMany(); 
-            return res.json(reservations_);
-            
+            const reservations_ = await reservations.findMany();
+    
+            const result = await Promise.all(reservations_.map(async (reservation) => {
+                try {
+                    const user = await findUser({ id: reservation.user_id });
+                    const room = await findRoom({ id: reservation.room_id });
+                    
+                    return { ...reservation, user, room };
+                } catch (err) {
+                    throw new Error(err);
+                }
+            }));
+    
+            return res.json(result);
         } catch (error) {
-            next(error); 
+            next(error);
         }
-    }, 
+    },
 
     store: async(req, res, next) => {
         try {
@@ -64,11 +82,14 @@ module.exports = {
         try {
             const { id } = req.params; 
 
-            const res = await reservations.findFirst({
+            const reservation = await reservations.findFirst({
                 where: {id: +id}
             }); 
             
-            return res.json(res);
+            const user = await findUser({ id: reservation.user_id });
+            const room = await findRoom({ id: reservation.room_id });
+
+            return res.json({...reservation, user, room});
          
         } catch (error) {
             next(error); 

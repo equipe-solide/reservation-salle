@@ -1,20 +1,34 @@
 require('module-alias/register');
 const express = require('express');
 const cors = require("cors");
-const path = require('path');
 const { ROOM_SERVICE_URI, REST_API_ROOM } = require('@root/config'); 
-const grpc = require('@grpc/grpc-js'); 
+
+// gRPC server setup
+const path = require('path');
+const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
-const packageDefinition = protoLoader.loadSync(path.join(__dirname, '../protos/room.proto'));
-const degreeProto = grpc.loadPackageDefinition(packageDefinition);
+const roomPackageDef = protoLoader.loadSync(path.join(__dirname, '../protos/room.proto'));
+const roomProto = grpc.loadPackageDefinition(roomPackageDef);
+
+// access data 
+const { PrismaClient } = require('@prisma/client');
+const { rooms } = new PrismaClient(); 
 
 const server = new grpc.Server();
-// server.addService(degreeProto.Degrees.service, { find: findDegree });
-
+server.addService(roomProto.RoomService.service, { 
+    find: async (call, callback) => {
+        const { id } = call.request;
+        const room = await rooms.findFirst({ where: {id: +id} }); 
+        if (room) callback(null, room);
+        else callback({ code: grpc.status.NOT_FOUND, details: "room not found"});
+    } 
+});
 server.bindAsync(ROOM_SERVICE_URI, grpc.ServerCredentials.createInsecure(), () => {
     server.start();
+    console.log(`Room service running @${ROOM_SERVICE_URI}`)
 });
 
+// Expose to frontend via Rest API
 const app = express();
 app.use(cors());
 app.use(express.json());
