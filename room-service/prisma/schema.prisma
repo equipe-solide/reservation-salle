@@ -8,20 +8,20 @@ datasource db {
 }
 
 model equipements {
-  id            Int     @id @default(autoincrement())
-  nomEquipement String  @db.VarChar(40)
-  description   String? @db.VarChar(75)
-  dispo         Boolean @default(true)
-  rooms         rooms[]
+  id          Int     @id @default(autoincrement())
+  roomId      Int?
+  designation String  @db.VarChar(40)
+  description String? @db.VarChar(75)
+  dispo       Boolean @default(true)
+  rooms       rooms?  @relation(fields: [roomId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "room_fk_2")
+
+  @@index([roomId], map: "room_fk_2")
 }
 
 model rooms {
-  id           Int          @id @default(autoincrement())
-  equipementId Int?
-  nomSalle     String       @db.VarChar(40)
-  lieu         String       @db.VarChar(40)
-  createdAt    DateTime     @default(now()) @db.Timestamp(0)
-  equipements  equipements? @relation(fields: [equipementId], references: [id], onDelete: Cascade, map: "equipement_fk")
-
-  @@index([equipementId], map: "equipement_fk")
+  id          Int           @id @default(autoincrement())
+  libelle     String        @db.VarChar(40)
+  lieu        String        @db.VarChar(40)
+  createdAt   DateTime      @default(now()) @db.Timestamp(0)
+  equipements equipements[]
 }
