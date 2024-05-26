@@ -16,8 +16,8 @@ module.exports = {
     
             const result = await Promise.all(reservations_.map(async (reservation) => {
                 try {
-                    const user = await findUser({ id: reservation.user_id });
-                    const room = await findRoom({ id: reservation.room_id });
+                    const user = await findUser({ id: reservation.userId });
+                    const room = await findRoom({ id: reservation.roomId });
                     
                     return { ...reservation, user, room };
                 } catch (err) {

@@ -4,6 +4,12 @@ const { users, issues } = new PrismaClient();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
 
+const { RESERVATION_SERVICE_URI } = require('@root/config');
+const { promisify } = require('util');
+const { reservationGrpcClient } = require('@root/main/grpc-client');
+
+const findReservation = promisify(reservationGrpcClient.findAll).bind(reservationGrpcClient);
+
 // generate random token 
 const generateRandomToken = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -29,7 +35,7 @@ module.exports = {
        try {
             const users_ = await users.findMany(); 
             const response = users_.map(user => {
-                unset(user, ['password', 'created_at']);
+                unset(user, ['password', 'createdAt']);
                 return { ...user }
             })
             return res.json(response);
@@ -42,8 +48,10 @@ module.exports = {
         try {
             const { id } = req.params;
             const user = await users.findFirst({ where: {id: +id} }); 
-            unset(user, ['password', 'created_at']);
-            return res.json(user);
+            const reservations = await findReservation({ userId: user.id });
+
+            unset(user, ['password', 'createdAt']);
+            return res.json({...user, ...reservations });
 
         } catch (error) {
             next(error);
@@ -65,7 +73,7 @@ module.exports = {
             }); 
 
             // remove id and password attributes from new_user
-            unset(new_user, ['password', 'created_at']);
+            unset(new_user, ['password', 'createdAt']);
             
             return res.json(new_user);
 
@@ -123,7 +131,7 @@ module.exports = {
                 data: { role }
             })
 
-            unset(updatedUser, ['password', 'created_at']);
+            unset(updatedUser, ['password', 'createdAt']);
             return res.json(updatedUser);
 
         } catch (error) {
@@ -142,7 +150,7 @@ module.exports = {
                 data: { password: hashedPassword }
             });
 
-            unset(updatedUser, ['password', 'created_at']);
+            unset(updatedUser, ['password', 'createdAt']);
             return res.json(updatedUser);
          
         } catch (error) {
@@ -154,7 +162,7 @@ module.exports = {
         try {
             const { id } = req.params;
             const deletedUser = await users.delete({ where: {id: +id} }); 
-            unset(deletedUser, ['password', 'created_at']);
+            unset(deletedUser, ['password', 'createdAt']);
             return res.json(deletedUser);
            
         } catch (error) {

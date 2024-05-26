@@ -18,10 +18,16 @@ const server = new grpc.Server();
 server.addService(reservationProto.ReservationService.service, { 
     find: async (call, callback) => {
         const { id } = call.request;
-        const user = await reservations.findFirst({ where: {id: +id} }); 
-        if (user) callback(null, user);
+        const reservation = await reservations.findFirst({ where: {id: +id} }); 
+        if (reservation) callback(null, reservation);
         else callback({ code: grpc.status.NOT_FOUND, details: "Reservation not found"});
-    } 
+    }, 
+    findAll: async (call, callback) => {
+        const { userId } = call.request;
+        const reservations_ = await reservations.findMany({ where: {userId: +userId } }); 
+        if (reservations_) callback(null, {reservations: reservations_});
+        else callback({ code: grpc.status.NOT_FOUND, details: "Reservation not found"});
+    }
 });
 server.bindAsync(RESERVATION_SERVICE_URI, grpc.ServerCredentials.createInsecure(), () => {
     server.start();

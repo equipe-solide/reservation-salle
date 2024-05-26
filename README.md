@@ -29,7 +29,7 @@
 
     Dans ce projet, les fichiers `.proto` se trouve dans le dossier `./protos`.
 
-    - Utilisation de gRPC 
+    - ***Utilisation de gRPC*** 
 
     | Fonctionnalité     |   gRPC            |
     | ------------------ | ----------------- |
@@ -86,7 +86,7 @@
     cd reservation-service & npm run migrate
 ```
 
-### LAUNCH APP [NO DOCKER]
+### LANCER APP BACKEND [NO DOCKER]
 
 - Run Gateway [Optional]
     ```bash
@@ -108,5 +108,5 @@
 - With the API Gateway:
     * server run @`localhost:8080`
 
-`Ecole Nationale d'Informatique, 2023 - 2024`
+`Ecole Nationale d'Informatique, 2023/2024`
 
