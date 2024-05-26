@@ -1,12 +1,26 @@
-### INSTALL PACKAGE 
+### INSTALL PACKAGE [NO DOCKER]
+```bash
+    # gateway
+    cd gateway & npm install
 
+    # main
+    cd main & npm install
 
-### LAUNCH APP 
+    # room-service  
+    cd room-service & npm install
+
+    # user-service
+    cd user-service & npm install
+
+    # reservation-service
+    cd reservation-service & npm install
+```
+
+### LAUNCH APP [NO DOCKER]
 
 - Run Gateway [Optional]
     ```bash
-        cd gateway
-        npm run start
+        cd gateway & npm run start
     ```
 
 - Run Main Service
@@ -17,8 +31,8 @@
     ```
 
 - Without the API Gateway:
-    * room-service run @`localhost:8081`
-    * user-service run @`localhost:8082`
+    * user-service run @`localhost:8081`
+    * room-service run @`localhost:8082`
     * reservation-service run @`localhost:8083`
 
 - With the API Gateway:

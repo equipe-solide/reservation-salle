@@ -28,7 +28,11 @@ module.exports = {
     index: async(req, res, next) => {
        try {
             const users_ = await users.findMany(); 
-            return res.json(users_);
+            const response = users_.map(user => {
+                unset(user, ['password', 'created_at']);
+                return { ...user }
+            })
+            return res.json(response);
 
        } catch (error) {
             next(error);
@@ -38,6 +42,7 @@ module.exports = {
         try {
             const { id } = req.params;
             const user = await users.findFirst({ where: {id: +id} }); 
+            unset(user, ['password', 'created_at']);
             return res.json(user);
 
         } catch (error) {
@@ -60,7 +65,7 @@ module.exports = {
             }); 
 
             // remove id and password attributes from new_user
-            unset(new_user, ['id', 'password']);
+            unset(new_user, ['password', 'created_at']);
             
             return res.json(new_user);
 
@@ -118,7 +123,7 @@ module.exports = {
                 data: { role }
             })
 
-            unset(updatedUser, ['id', 'password']);
+            unset(updatedUser, ['password', 'created_at']);
             return res.json(updatedUser);
 
         } catch (error) {
@@ -137,7 +142,7 @@ module.exports = {
                 data: { password: hashedPassword }
             });
 
-            unset(updatedUser, ['id', 'password']);
+            unset(updatedUser, ['password', 'created_at']);
             return res.json(updatedUser);
          
         } catch (error) {
@@ -149,7 +154,7 @@ module.exports = {
         try {
             const { id } = req.params;
             const deletedUser = await users.delete({ where: {id: +id} }); 
-            unset(deletedUser, ['id', 'password']);
+            unset(deletedUser, ['password', 'created_at']);
             return res.json(deletedUser);
            
         } catch (error) {
