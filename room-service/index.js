@@ -2,7 +2,7 @@ require('module-alias/register');
 const express = require('express');
 const cors = require("cors");
 const path = require('path');
-const { ROOM_SERVICE_URI } = require('@root/config'); 
+const { ROOM_SERVICE_URI, REST_API_ROOM } = require('@root/config'); 
 const grpc = require('@grpc/grpc-js'); 
 const protoLoader = require('@grpc/proto-loader');
 const packageDefinition = protoLoader.loadSync(path.join(__dirname, '../protos/room.proto'));
@@ -25,5 +25,5 @@ app.use('/api/equipement', require('./routes/equipement.route'));
 
 const EXPRESS_PORT = 8082;
 app.listen(EXPRESS_PORT, () => {
-    console.log(`REST API RoomService running @${EXPRESS_PORT}`);
+    console.log(`REST API RoomService running @${REST_API_ROOM}`);
 });
