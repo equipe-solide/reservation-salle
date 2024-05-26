@@ -12,13 +12,16 @@ const roomProto = grpc.loadPackageDefinition(roomPackageDef);
 
 // access data 
 const { PrismaClient } = require('@prisma/client');
-const { rooms } = new PrismaClient(); 
+const { rooms, equipements } = new PrismaClient(); 
 
 const server = new grpc.Server();
 server.addService(roomProto.RoomService.service, { 
     find: async (call, callback) => {
         const { id } = call.request;
-        const room = await rooms.findFirst({ where: {id: +id} }); 
+        const room = await rooms.findFirst({ 
+            where: {id: +id}, 
+            include: {equipements: true}
+        }); 
         if (room) callback(null, room);
         else callback({ code: grpc.status.NOT_FOUND, details: "room not found"});
     } 

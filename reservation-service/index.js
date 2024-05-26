@@ -3,6 +3,32 @@ const express = require('express');
 const cors = require("cors");
 const { RESERVATION_SERVICE_URI, REST_API_RESERVATION } = require('@root/config'); 
 
+// gRPC server setup
+const path = require('path');
+const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
+const reservationPackageDef = protoLoader.loadSync(path.join(__dirname, '../protos/reservation.proto'));
+const reservationProto = grpc.loadPackageDefinition(reservationPackageDef);
+
+// access data 
+const { PrismaClient } = require('@prisma/client');
+const { reservations } = new PrismaClient(); 
+
+const server = new grpc.Server();
+server.addService(reservationProto.ReservationService.service, { 
+    find: async (call, callback) => {
+        const { id } = call.request;
+        const user = await reservations.findFirst({ where: {id: +id} }); 
+        if (user) callback(null, user);
+        else callback({ code: grpc.status.NOT_FOUND, details: "Reservation not found"});
+    } 
+});
+server.bindAsync(RESERVATION_SERVICE_URI, grpc.ServerCredentials.createInsecure(), () => {
+    server.start();
+    console.log(`User service running @${RESERVATION_SERVICE_URI}`)
+});
+
+// Expose to frontend via Rest API
 const app = express();
 app.use(cors());
 app.use(express.json());
