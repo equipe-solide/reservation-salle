@@ -1,12 +1,12 @@
 require('module-alias/register');
 const { PrismaClient } = require('@prisma/client');
-const { reservations } = new PrismaClient(); 
+const { reservations, notifications } = new PrismaClient(); 
 
 module.exports = {
     index: async(req, res, next) => {
         try {
-            const reservations_ = await reservations.findMany(); 
-            return res.json(reservations_);
+            const notifications_ = await notifications.findMany(); 
+            return res.json(notifications_);
             
         } catch (error) {
             next(error); 
@@ -15,10 +15,7 @@ module.exports = {
 
     store: async(req, res, next) => {
         try {
-            req.body.date_heure_debut = new Date(req.body.date_heure_debut)
-            req.body.date_heure_fin = new Date(req.body.date_heure_fin)
-
-            const new_res = await reservations.create({
+            const new_res = await notifications.create({
                 data: req.body
             }); 
             return res.json(new_res);
@@ -31,10 +28,8 @@ module.exports = {
     update: async(req, res, next) => {
         try {
             const { id } = req.params; 
-            req.body.date_heure_debut = new Date(req.body.date_heure_debut)
-            req.body.date_heure_fin = new Date(req.body.date_heure_fin)
 
-            const update_res = await reservations.update({
+            const update_res = await notifications.update({
                 where: {id: +id}, 
                 data: req.body
             }); 
@@ -49,7 +44,7 @@ module.exports = {
         try {
             const { id } = req.params; 
 
-            const delete_res = await reservations.delete({
+            const delete_res = await notifications.delete({
                 where: {id: +id}
             }); 
             
@@ -64,7 +59,7 @@ module.exports = {
         try {
             const { id } = req.params; 
 
-            const res = await reservations.findFirst({
+            const res = await notifications.findFirst({
                 where: {id: +id}
             }); 
             

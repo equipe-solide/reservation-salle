@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
+    "test": "echo \"Error: no test specified\" && exit 1",
     "schema:generate": "npx prisma db pull && npx prisma generate",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev",
+    "start": "node ./index.js",
+    "start-dev": "nodemon ./index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +17,15 @@
     "@grpc/grpc-js": "^1.10.8",
     "@grpc/proto-loader": "^0.7.13",
     "@prisma/client": "^5.14.0",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "module-alias": "^2.2.3",
     "prisma": "^5.14.0"
-  }, 
+  },
   "_moduleAliases": {
     "@root": "../"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.1"
   }
 }

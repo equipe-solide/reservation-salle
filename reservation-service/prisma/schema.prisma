@@ -18,8 +18,8 @@ model notifications {
 
 model reservations {
   id               Int       @id @default(autoincrement())
-  date_heure_debut DateTime  @db.DateTime(0)
-  date_heure_fin   DateTime? @db.DateTime(0)
-  statut           String    @default("confirme") @db.VarChar(20)
+  date_heure_debut DateTime  @db.Date
+  date_heure_fin   DateTime? @db.Date
+  statut           String    @default("en attente") @db.VarChar(20)
   created_at       DateTime  @default(now()) @db.Timestamp(0)
 }

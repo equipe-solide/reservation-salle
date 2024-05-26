@@ -1,7 +1,6 @@
 require('module-alias/register');
 const { PrismaClient } = require('@prisma/client');
 const { users, issues } = new PrismaClient(); 
-const { unset } = require('@root/main/helpers'); 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
 
@@ -18,6 +17,12 @@ const generateRandomToken = () => {
   
   return token;
 };
+
+const unset = (obj, properties) => {
+    properties.forEach(property => {
+        delete obj[property];
+    });
+}
 
 module.exports = {
     index: async(req, res, next) => {
