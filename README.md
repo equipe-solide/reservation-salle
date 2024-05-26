@@ -29,6 +29,16 @@
 
     Dans ce projet, les fichiers `.proto` se trouve dans le dossier `./protos`.
 
+    - Utilisation de gRPC 
+
+    | Fonctionnalité     |   gRPC            |
+    | ------------------ | ----------------- |
+    | Communication inter-services | Permet aux microservices de communiquer de manière efficace et performante. |
+    | API bidirectionnelles | Supporte les flux de données bidirectionnels entre client et serveur. |
+    | Efficacité et performance | Utilise `HTTP/2` et `Protocol Buffers` pour des communications rapides et compactes.|
+    | Définition de services | Utilise des fichiers `.proto` pour définir les services et génère automatiquement le code client et serveur.|
+    | Streaming de données | Permet le streaming de données en temps réel, utile pour les applications de chat ou de collaboration.|
+
 - **Prisma** - [prisma.io](https://prisma.io/)
 
     `Prisma` est un `ORM` (Object-Relational Mapping) moderne et open source qui facilite l'accès et la gestion des bases de données dans les applications. Conçu pour être utilisé avec TypeScript ou JavaScript, Prisma offre une approche déclarative pour interagir avec les bases de données relationnelles.
