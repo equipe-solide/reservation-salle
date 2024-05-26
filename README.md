@@ -15,6 +15,23 @@
     # reservation-service
     cd reservation-service & npm install
 ```
+### RUN MIGRATIONS [NO DOCKER]
+```bash
+    # gateway
+    cd gateway & npm run migrate
+
+    # main
+    cd main & npm run migrate
+
+    # room-service  
+    cd room-service & npm run migrate
+
+    # user-service
+    cd user-service & npm run migrate
+
+    # reservation-service
+    cd reservation-service & npm run migrate
+```
 
 ### LAUNCH APP [NO DOCKER]
 
