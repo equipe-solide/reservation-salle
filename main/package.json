@@ -13,7 +13,7 @@
     "start-room-service-dev": "nodemon ../room-service/index.js",
     "start-user-service-dev": "nodemon ../user-service/index.js",
     "start-main-service-dev": "nodemon ./index.js",
-    "start": "concurrently 'npm run start-reservation-service' 'npm run start-room-service' 'npm run start-user-service' 'npm run start-main-service'",
+    "start": "concurrently \"npm run start-reservation-service\" \"npm run start-room-service\" \"npm run start-user-service\" \"npm run start-main-service\"",
     "start-dev": "concurrently 'npm run start-reservation-service-dev' 'npm run start-room-service-dev' 'npm run start-user-service-dev' 'npm run start-main-service-dev'"
   },
   "keywords": [],

@@ -102,7 +102,7 @@ module.exports = {
 
                     return res.json({ 
                         access_token, 
-                        user: { email: user.email, role: user.role }
+                        user: { email: user.email,user_id: user.id, role: user.role }
                     });
                 }
 
