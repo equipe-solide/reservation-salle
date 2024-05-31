@@ -53,6 +53,12 @@
 
 ### INSTALLATION DES DEPENDANCES [NO DOCKER]
 ```bash
+    # clone repo ssh
+    git clone git@github.com:equipe-solide/reservation-salle-backend.git
+
+    # clone repo https
+    git clone https://github.com/equipe-solide/reservation-salle-backend.git
+    
     # gateway
     cd gateway & npm install
 
@@ -108,5 +114,5 @@
 - With the API Gateway:
     * server run @`localhost:8080`
 
-`Ecole Nationale d'Informatique, 2023/2024`
+`Ecole Nationale d'Informatique, 2023-2024`
 
